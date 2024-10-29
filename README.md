@@ -1,4 +1,4 @@
-Este repositorio contiene una aplicación web realizada como trabajo de la asignatura Desarrollo de Aplicaciones Web del 3º curso de Ingeniería Informática de la Universidad de Jaén.
+Este repositorio contiene una aplicación web realizada como trabajo de la asignatura Desarrollo de Aplicaciones Web del 3º curso de Ingeniería Informática de la Universidad de Jaén. En este proyecto se han utilizado lenguajes de programación tales como Java, HTML, XHTML, JavaScript y el framework Vue.js.
 
 ### Descripción del proyecto
  ESTIM es un sitio web de venta de videojuegos online. Los usuarios no registrados podrán ver los diferentes juegos que ofrecemos y si se deciden a crear una cuenta podrán añadir al carrito cualquiera de ellos para obtenerlos de forma inmediata al mejor precio del mercado. Cualquier usuario registrado podrá ver los artículos que ha agregado al carrito así como su precio final. Una vez que un usuario realiza la compra de su carrito podrá optar a la generación de una factura en la que aparezcan los datos de su compra.
