@@ -1,0 +1,66 @@
+<ui:composition template="../WEB-INF/plantillas/general.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:pt="jakarta.faces.passthrough">
+
+   <ui:define name="content">
+      <f:metadata>
+         <f:viewParam name="id" required="true"
+                      value="#{ videojuegoCtrl.videojuego.id }"/>
+         <f:viewAction action="#{ videojuegoCtrl.recupera() }"/>
+      </f:metadata>
+
+      <title>Editar Videojuego</title>
+      <h:body>
+         <h1 class="titulo">Edita Videojuego</h1>
+         <h:form styleClass="formulario">
+            <span>
+               <p:inputText id="nombre" value="#{videojuegoCtrl.videojuego.nombre}"
+                            pt:placeholder="Nombre" required="true" requiredMessage="El nombre es obligatorio"/>
+               <p:message for="nombre"/>
+            </span>
+            <br/><br/>
+
+            <span>
+               <p:inputText id="desarrolladora" value="#{videojuegoCtrl.videojuego.desarrolladora}"
+                            pt:placeholder="Desarrolladora" required="true" requiredMessage="La desarrolladora es obligatoria"/>
+               <p:message for="desarrolladora"/>
+            </span>
+            <br/><br/>
+
+
+            <span>
+               <p:inputText id="descripcion" value="#{videojuegoCtrl.videojuego.descripcion}"
+                         pt:placeholder="Descripción" required="true" requiredMessage="La descripcion es obligatorio"/>
+               <p:message for="descripcion"/>
+            </span>
+            <br/><br/>
+
+
+            <span>
+               <p:inputText id="precio" value="#{videojuegoCtrl.videojuego.precio}"
+                         pt:placeholder="Precio" required="true" requiredMessage="El precio es obligatorio" validatorMessage="El precio debe ser un número mayor o igual a 0"/>
+               <p:message for="precio"/>
+            </span>
+            <br/><br/>
+
+
+            <span>
+               <p:inputText id="valoracion" value="#{videojuegoCtrl.videojuego.valoracion}"
+                         pt:placeholder="Valoracion" required="false" validatorMessage="La valoración debe ser un número entre 0 y 10"/>
+               <p:message for="valoracion"/>
+            </span>
+            <br/><br/>
+
+            <p:button id="volver" styleClass="ui-button-secondary" value="Volver" outcome="catalogo"/>
+            <p:spacer width="5"/>
+            <p:commandButton ajax="false" action="#{videojuegoCtrl.edita()}" value="Actualizar videojuego" />
+         </h:form>
+
+      </h:body>
+
+   </ui:define>
+</ui:composition>

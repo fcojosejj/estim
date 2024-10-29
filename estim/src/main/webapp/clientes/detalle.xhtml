@@ -1,0 +1,103 @@
+<ui:composition template="../WEB-INF/plantillas/general.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:pt="jakarta.faces.passthrough"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <!-- Vista con información completa de un cliente -->
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:viewParam name="id" required="true"
+                         value="#{clienteCtrl.cliente.id}"/>
+            <f:viewAction action="#{clienteCtrl.recupera()}"/>
+        </f:metadata>
+
+        <title>Detalle del cliente</title>
+
+        <p:panel id="panelDatos" header="Datos del cliente">
+            <p:panelGrid columns="1" styleClass="customer-card">
+                <c:if test="#{clienteCtrl.getByUser(request.userPrincipal.name).id == clienteCtrl.cliente.id}">
+                <c:if test="#{request.isUserInRole('ADMINISTRADORES')}">
+                    <p:row>
+                        <p:column>
+                            <b>ID: </b>#{clienteCtrl.cliente.id}
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <b>Rol: </b>#{clienteCtrl.cliente.rol}
+                        </p:column>
+                    </p:row>
+                </c:if>
+
+                    <p:row>
+                        <p:column>
+                            <b>Usuario: </b>#{clienteCtrl.cliente.usuario}
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <b>Contraseña: </b>#{clienteCtrl.cliente.psswd}
+                        </p:column>
+                    </p:row>
+            </c:if>
+                <p:row>
+                    <p:column>
+                        <b>DNI: </b>#{clienteCtrl.cliente.dni}
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <b>Nombre: </b>#{clienteCtrl.cliente.nombre}
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <b>Apellidos: </b>#{clienteCtrl.cliente.apellidos}
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <b>Email: </b>#{clienteCtrl.cliente.email}
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <b>Fecha de nacimiento: </b>#{clienteCtrl.cliente.fechaNac}
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <b>Calle: </b>#{clienteCtrl.cliente.calle}
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <b>Número: </b>#{clienteCtrl.cliente.num}
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <b>Código postal: </b>#{clienteCtrl.cliente.codPostal}
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <b>Ciudad: </b>#{clienteCtrl.cliente.ciudad}
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <b>País: </b>#{clienteCtrl.cliente.pais}
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+            <br/>
+            <p:button id="volver" styleClass="ui-button-secondary" value="Volver" outcome="listado"/>
+        </p:panel>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,18 @@
+.titulo{
+    margin-left: 20px;
+}
+
+.formulario{
+    margin-left: 40px;
+}
+.imagen{
+    text-align: center;
+}
+
+.volver{
+    margin-left: 5px;
+}
+
+input[type=text] {
+    width: 500px;
+}

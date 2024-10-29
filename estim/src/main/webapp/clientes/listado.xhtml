@@ -1,0 +1,150 @@
+<ui:composition template="../WEB-INF/plantillas/general.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:pt="jakarta.faces.passthrough"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <!-- Vista con un listado de los clientes -->
+
+    <ui:define name="content">
+        <title>Clientes</title>
+        <h:body>
+            <h1 class="titulo">Clientes</h1>
+            <h:form id="formularioClientes">
+                <p:dataTable id="clientes" var="c" value="#{clienteCtrl.clientes}">
+                    <p:column headerText="Nombre" sortBy="#{c.nombre}">
+                        #{c.nombre}
+                    </p:column>
+                    <p:column headerText="Email">
+                        #{c.email}
+                    </p:column>
+                    <p:column>
+                        <p:button id="detalle" styleClass="ui-button-info" icon="pi pi-search" iconPos="right"
+                                  outcome="detalle">
+                            <p:tooltip for="detalle" value="Más información"/>
+                            <f:param name="id" value="#{c.id}"/>
+                        </p:button>
+
+                        <c:if test="#{request.isUserInRole('ADMINISTRADORES')}">
+                            <p:spacer width="5"/>
+                            <p:commandButton id="borrado" update=":formularioClientes:clientes"
+                                             styleClass="ui-button-danger"
+                                             icon="pi pi-trash" iconPos="right" action="#{clienteCtrl.borra(c.id)}">
+                                <p:tooltip for="borrado" value="Borrar cliente"/>
+                            </p:commandButton>
+                            <p:spacer width="5"/>
+                            <p:button id="edita" styleClass="ui-button-warning" icon="pi pi-pencil" iconPos="right"
+                                      outcome="edita">
+                                <p:tooltip for="edita" value="Editar datos"/>
+                                <f:param name="id" value="#{c.id}"/>
+                            </p:button>
+                        </c:if>
+
+                    </p:column>
+                    <f:facet name="footer">
+                        Actualmente hay #{clienteCtrl.clientes.size()} clientes registrados.
+                    </f:facet>
+                </p:dataTable>
+            </h:form>
+
+            <br/>
+
+            <c:if test="#{request.isUserInRole('ADMINISTRADORES')}">
+                <h2 class="titulo">Alta de clientes</h2>
+                <h:form styleClass="formulario">
+                <span>
+                    <p:inputText id="dni" value="#{clienteCtrl.cliente.dni}"
+                                 pt:placeholder="DNI" required="true" requiredMessage="El DNI es obligatorio"/>
+                    <p:message for="dni"/>
+                </span>
+                    <br/><br/>
+                    <span>
+                    <p:inputText id="nombre" value="#{clienteCtrl.cliente.nombre}"
+                                 pt:placeholder="Nombre" required="true"
+                                 requiredMessage="El nombre es obligatorio"/>
+                    <p:message for="nombre"/>
+                </span>
+                    <br/><br/>
+                    <span>
+                    <p:inputText id="apellidos" value="#{clienteCtrl.cliente.apellidos}"
+                                 pt:placeholder="Apellidos" required="true"
+                                 requiredMessage="Los apellidos son obligatorios"/>
+                    <p:message for="apellidos"/>
+                </span>
+                    <br/><br/>
+                    <span>
+                    <p:inputText id="email" value="#{clienteCtrl.cliente.email}"
+                                 pt:placeholder="Email" required="true" requiredMessage="El email es obligatorio"/>
+                    <p:message for="email"/>
+                </span>
+                    <br/><br/>
+                <span>
+                    <p:datePicker id="fechaNac" value="#{clienteCtrl.cliente.fechaNac}" pattern="dd-MM-yyyy"
+                                  monthNavigator="true" yearNavigator="true" locale="es" yearRange="1900:2023"
+                                  pt:placeholder="Fecha de nacimiento" required="true"
+                                  requiredMessage="La fecha de nacimiento es obligatoria"/>
+                    <p:message for="fechaNac"/>
+                </span>
+                    <br/><br/>
+                <span>
+                    <p:selectOneMenu id="rol" value="#{clienteCtrl.cliente.rol}">
+                         <f:selectItem itemLabel="Usuario" itemValue="USUARIOS"/>
+                         <f:selectItem itemLabel="Administrador" itemValue="ADMINISTRADORES"/>
+                    </p:selectOneMenu>
+                </span>
+                    <br/><br/>
+                    <span>
+                    <p:inputText id="usuario" value="#{clienteCtrl.cliente.usuario}"
+                                 pt:placeholder="Usuario" required="true"
+                                 requiredMessage="El usuario es obligatorio"/>
+                        <p:message for="usuario"/>
+                </span>
+                    <br/><br/>
+                <span>
+                    <p:inputText id="psswd" value="#{clienteCtrl.cliente.psswd}"
+                                 pt:placeholder="Contraseña" required="true"
+                                 requiredMessage="La contraseña es obligatoria"/>
+                        <p:message for="psswd"/>
+                </span>
+                    <br/><br/>
+                    <span>
+                    <p:inputText id="calle" value="#{clienteCtrl.cliente.calle}"
+                                 pt:placeholder="Calle" required="true"
+                                 requiredMessage="La calle es obligatoria"/>
+                </span>
+                    <br/><br/>
+                    <span>
+                    Nº <p:inputNumber id="num" value="#{clienteCtrl.cliente.num}"
+                                 pt:placeholder="Número de calle" required="true"
+                                 requiredMessage="El número de la calle es obligatorio"/>
+                </span>
+                    <br/><br/>
+                    <span>
+                    <p:inputText id="ciudad" value="#{clienteCtrl.cliente.ciudad}"
+                                 pt:placeholder="Ciudad" required="true"
+                                 requiredMessage="La ciudad es obligatoria"/>
+                </span>
+                    <br/><br/>
+                    <span>
+                    <p:inputText id="codPostal" value="#{clienteCtrl.cliente.codPostal}"
+                                 pt:placeholder="Código postal" required="true"
+                                 requiredMessage="La código postal es obligatorio"/>
+                        <p:message for="codPostal"/>
+                </span>
+                    <br/><br/>
+                    <span>
+                    <p:inputText id="pais" value="#{clienteCtrl.cliente.pais}"
+                                 pt:placeholder="País" required="true"
+                                 requiredMessage="El país es obligatorio"/>
+                </span>
+                    <br/><br/>
+                    <p:commandButton ajax="false" update=":formularioClientes:clientes" action="#{clienteCtrl.crea()}"
+                                     value="Alta"/>
+                </h:form>
+            </c:if>
+        </h:body>
+    </ui:define>
+</ui:composition>

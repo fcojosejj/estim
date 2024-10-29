@@ -1,0 +1,59 @@
+<ui:composition template="../WEB-INF/plantillas/general.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:pt="jakarta.faces.passthrough"
+                xmlns:p="http://primefaces.org/ui">
+
+   <h:head>
+      <f:metadata>
+         <f:viewParam name="id" required="true"
+                      value="#{ videojuegoCtrl.videojuego.id }"/>
+         <f:viewAction action="#{ videojuegoCtrl.recupera() }"/>
+      </f:metadata>
+   </h:head>
+
+   <ui:define name="content">
+
+      <title>Detalle de un videojuego</title>
+
+      <p:panel id="panelDatos" header="Datos de un videojuego">
+         <p:panelGrid columns="1" styleClass="customer-card">
+            <p:row>
+               <p:column>
+                  <b>ID: </b>#{videojuegoCtrl.videojuego.id}
+               </p:column>
+            </p:row>
+            <p:row>
+               <p:column>
+                  <b>Nombre: </b>#{videojuegoCtrl.videojuego.nombre}
+               </p:column>
+            </p:row>
+            <p:row>
+               <p:column>
+                  <b>Desarrolladora: </b>#{videojuegoCtrl.videojuego.desarrolladora}
+               </p:column>
+            </p:row>
+            <p:row>
+               <p:column>
+                  <b>Descripción: </b>#{videojuegoCtrl.videojuego.descripcion}
+               </p:column>
+            </p:row>
+            <p:row>
+               <p:column>
+                  <b>Precio: </b>#{videojuegoCtrl.videojuego.precio} €
+               </p:column>
+            </p:row>
+            <p:row>
+               <p:column>
+                  <b>Valoración: </b>#{videojuegoCtrl.videojuego.valoracion}/10
+               </p:column>
+            </p:row>
+         </p:panelGrid>
+         <br/>
+         <input name="action" type="submit" value="Volver" onclick="window.history.back();"/>
+      </p:panel>
+
+   </ui:define>
+</ui:composition>

@@ -1,0 +1,131 @@
+<ui:composition template="../WEB-INF/plantillas/general.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- Vista que mostrará la factura después de haber comprado los juegos del carrito -->
+
+    <ui:define name="content">
+
+        <title>Tu factura</title>
+        <div class="receipt-content">
+            <div class="container bootstrap snippets bootdey">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="invoice-wrapper">
+                            <p:panel id="panelDatos" header="Factura">
+                                <p:panelGrid columns="1" styleClass="customer-card">
+
+                                    <span>Datos factura</span>
+                                    <div class="payment-info">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <span>Nº de pedido</span>
+                                                <strong id="num-pedido"></strong>
+                                            </div>
+                                            <div class="col-sm-6 text-right">
+                                                <span>Fecha de compra</span>
+                                                <strong id="fecha-compra"></strong>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br></br>
+                                    <span>Datos Cliente</span>
+                                    <div class="payment-info">
+                                        <div class="row">
+                                            <span>Nombre</span>
+                                            <strong>#{clienteCtrl.getByUser(request.userPrincipal.name).nombre}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="payment-info">
+                                        <div class="row">
+                                            <span>Apellidos</span>
+                                            <strong>#{clienteCtrl.getByUser(request.userPrincipal.name).apellidos}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="payment-info">
+                                        <div class="row">
+                                            <span>DNI</span>
+                                            <strong>#{clienteCtrl.getByUser(request.userPrincipal.name).dni}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="payment-info">
+                                        <div class="row">
+                                            <span>Calle y número</span>
+                                            <strong>#{clienteCtrl.getByUser(request.userPrincipal.name).calle}, Número #{clienteCtrl.getByUser(request.userPrincipal.name).num}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="payment-info">
+                                        <div class="row">
+                                            <span>Ciudad</span>
+                                            <strong>#{clienteCtrl.getByUser(request.userPrincipal.name).ciudad}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="payment-info">
+                                        <div class="row">
+                                            <span>País</span>
+                                            <strong>#{clienteCtrl.getByUser(request.userPrincipal.name).pais}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="payment-info">
+                                        <div class="row">
+                                            <span>Número postal</span>
+                                            <strong>#{clienteCtrl.getByUser(request.userPrincipal.name).codPostal}</strong>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="line-items">
+                                        <span>Videojuegos</span>
+                                        <div class="items">
+                                            <ui:repeat value="#{carritoCtrl.getVideojuegosCliente(clienteCtrl.getByUser(request.userPrincipal.name).id)}" var="videojuego">
+                                                <div class="row item">
+                                                    <div class="col-xs-4 desc">
+                                                        <strong>#{videojuego.nombre}</strong>
+                                                    </div>
+                                                    <div class="col-xs-5 amount text-right">
+                                                        <strong>#{videojuego.precio} €</strong>
+                                                    </div>
+                                                </div>
+                                                <br></br>
+                                            </ui:repeat>
+
+                                            <strong>Precio total: #{carritoCtrl.getTotal(clienteCtrl.getByUser(request.userPrincipal.name).id)} €</strong>
+                                        </div>
+                                        
+                                    </div>
+                                </p:panelGrid>
+                            </p:panel>
+
+                            <div class="footer">
+                                Copyright © 2023. ESTIM
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>
+        <script>
+            // Comprobar si existe una cookie para el número de pedido
+            var numPedido = Cookies.get('numPedido');
+            if (!numPedido) {
+                // Si no existe la cookie, generar un número aleatorio y establecer la cookie
+                numPedido = Math.floor(Math.random() * 101);
+                Cookies.set('numPedido', numPedido);
+            }
+
+            // Obtener fecha actual
+            var fechaCompra = new Date().toLocaleString();
+
+            // Insertar número y fecha en el HTML
+            document.getElementById("num-pedido").innerHTML = numPedido;
+            document.getElementById("fecha-compra").innerHTML = fechaCompra;
+        </script>
+
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,49 @@
+<ui:composition template="../WEB-INF/plantillas/general.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:pt="jakarta.faces.passthrough"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="content">
+        <title>Carrito</title>
+        <h:body>
+            <h1 class="titulo">Carrito</h1>
+            <h:form id="formularioJuegosCarrito">
+                <p:dataTable id="videojuegosCarrito" var="v" value="#{carritoCtrl.getVideojuegosCliente(clienteCtrl.getByUser(request.userPrincipal.name).id)}">
+                    <p:column headerText="Nombre">
+                        #{v.nombre}
+                    </p:column>
+                    <p:column headerText="Precio">
+                        #{v.precio} €
+                    </p:column>
+                    <p:column>
+                        <p:button id="detalle" icon="pi pi-search" outcome="detalle">
+                            <f:param name="id" value="#{v.id}"/>
+                            <p:tooltip for="detalle" value="Más información"/>
+                        </p:button>
+
+                        <p:spacer width="5"/>
+                        <p:commandButton id="borrado" styleClass="ui-button-danger" update=":formularioJuegosCarrito:videojuegosCarrito" icon="pi pi-trash" title="Borrar"
+                                         action="#{carritoCtrl.borraVideojuegoDeCarrito(clienteCtrl.getByUser(request.userPrincipal.name).id, v.id)}">
+                            <p:tooltip for="borrado" value="Borrar videojuego"/>
+                        </p:commandButton>
+
+                    </p:column>
+                    <f:facet name="footer">
+                        Actualmente hay #{carritoCtrl.getVideojuegosCliente(clienteCtrl.getByUser(request.userPrincipal.name).id).size()} videojuegos en el carrito.
+                    </f:facet>
+                </p:dataTable>
+
+                <br/>
+                <div class="formulario">
+                    <p:button id="factura" icon="pi pi-thumbs-up" outcome="/videojuegos/factura" value="Comprar">
+                        <p:tooltip for="factura" value="Comprar"/>
+                    </p:button>
+                </div>
+            </h:form>
+        </h:body>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,61 @@
+<ui:composition template="../WEB-INF/plantillas/general.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:pt="jakarta.faces.passthrough"
+                xmlns:p="http://primefaces.org/ui">
+
+    <!-- Vista con información completa de un cliente -->
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:viewParam name="id" required="true"
+                         value="#{clienteCtrl.cliente.id}"/>
+            <f:viewAction action="#{clienteCtrl.recupera()}"/>
+        </f:metadata>
+
+        <title>Editar datos</title>
+
+        <h2 class="titulo">Editar datos</h2>
+        <h:form styleClass="formulario">
+                <span>
+                <p:inputText disabled="true" id="dni" value="#{clienteCtrl.cliente.dni}"
+                             pt:placeholder="DNI"/>
+                </span>
+            <br/><br/>
+            <span>
+                <p:inputText id="nombre" value="#{clienteCtrl.cliente.nombre}"
+                             pt:placeholder="Nombre" required="true" requiredMessage="El nombre es obligatorio"/>
+                <p:message for="nombre"/>
+           </span>
+            <br/><br/>
+            <span>
+                    <p:inputText id="apellidos" value="#{clienteCtrl.cliente.apellidos}"
+                                 pt:placeholder="Apellidos" required="true"
+                                 requiredMessage="Los apellidos son obligatorio"/>
+                    <p:message for="apellidos"/>
+                </span>
+            <br/><br/>
+            <span>
+                <p:inputText id="email" value="#{clienteCtrl.cliente.email}"
+                             pt:placeholder="Email" required="true" requiredMessage="El email es obligatorio"/>
+                    <p:message for="email"/>
+           </span>
+            <br/><br/>
+            <span>
+                <p:datePicker id="fechaNac" value="#{clienteCtrl.cliente.fechaNac}"
+                              monthNavigator="true" yearNavigator="true" locale="es" yearRange="1900:2023"
+                              pt:placeholder="Fecha de nacimiento" required="true"
+                              requiredMessage="La fecha de nacimiento es obligatoria"/>
+               <p:message for="fechaNac"/>
+                </span>
+            <br/><br/>
+            <p:button id="volver" styleClass="ui-button-secondary" value="Volver" outcome="listado"/>
+            <p:spacer width="5"/>
+            <p:commandButton id="actualiza" ajax="false" action="#{clienteCtrl.edita()}" value="Actualizar datos"/>
+        </h:form>
+    </ui:define>
+
+
+</ui:composition>
